@@ -19,8 +19,6 @@ selenium-ide-runner/
 ├── run.sh                # 테스트 실행 스크립트
 ├── parser.py             # 실패 테스트 분석 유틸리티
 ├── scenarios/            # Selenium IDE 테스트 파일 (.side)
-│   ├── lab.side
-│   └── chzzk-lab.side
 └── reports/              # 테스트 결과 JSON 파일
 ```
 
