@@ -158,7 +158,7 @@ async def execute_side(side_id: str):
 async def upload_side(side_id: str, file: UploadFile = File(...)):
     """사이드 파일 업로드"""
     # 파일 확장자 검증
-    if not file.filename.endswith(".side"):
+    if file.filename and not file.filename.endswith(".side"):
         raise HTTPException(status_code=400, detail="파일 확장자는 .side여야 합니다.")
     
     file_path = get_side_file_path(side_id)
