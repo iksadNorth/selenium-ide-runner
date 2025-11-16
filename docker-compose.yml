@@ -1,0 +1,40 @@
+services:
+  selenium-hub:
+    image: selenium/hub:latest
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"  # Hub UI/포트
+
+  chrome-node-1:
+    image: selenium/node-chrome:latest
+    platform: linux/amd64 # M1 CPU
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=1
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_VNC_PASSWORD=q1w2e3r4
+    ports:
+      - "7901:7900"    # noVNC 웹 포트
+    volumes:
+      - /dev/shm:/dev/shm
+
+  chrome-node-2:
+    image: selenium/node-chrome:latest
+    platform: linux/amd64 # M1 CPU
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=1
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_VNC_PASSWORD=q1w2e3r4
+    ports:
+      - "7902:7900"    # noVNC 웹 포트
+    volumes:
+      - /dev/shm:/dev/shm

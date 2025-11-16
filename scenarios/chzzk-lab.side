@@ -1,0 +1,110 @@
+{
+  "id": "d3fa9675-1332-47d5-b7bc-ea54703f7679",
+  "version": "2.0",
+  "name": "chzzk-lab",
+  "url": "https://chzzk.naver.com/",
+  "tests": [{
+    "id": "d2faeba0-b203-4bac-b113-179f3c7d7c0a",
+    "name": "chzzk-lab",
+    "commands": [{
+      "id": "5dde1715-a751-4f1a-a835-063f176c87df",
+      "comment": "",
+      "command": "open",
+      "target": "https://chzzk.naver.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fc4a2d3f-2f95-46ec-9d52-f9fc09f7ed4b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1071x693",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e4aef619-3158-48ca-907f-166275130287",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//span[contains(.,'전체 방송')]",
+      "targets": [
+        ["css=.navigation_bar_section__hDpyD:nth-child(1) .navigation_bar_item__4OS5Z:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/aside/div/div/nav/ul/li/a/span", "xpath:idRelative"],
+        ["xpath=//nav/ul/li/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'전체 방송')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "928f6e7b-c8d1-49df-b42f-b57504306db1",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div/input",
+      "targets": [
+        ["css=.navigation_lives_input__b0HFs", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='layout-body']/div/section/div[3]/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "05b37067-61d6-468f-9a15-70d68f17fe6d",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "xpath=//div[2]/div/input",
+      "targets": [
+        ["css=.navigation_lives_input__b0HFs", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='layout-body']/div/section/div[3]/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6a2d61a1-25fa-445c-be84-35e0714291cc",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//div[2]/div/input",
+      "targets": [
+        ["css=.navigation_lives_input__b0HFs", "css:finder"],
+        ["xpath=//input[@value='타르코프']", "xpath:attributes"],
+        ["xpath=//div[@id='layout-body']/div/section/div[3]/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "타르코프"
+    }, {
+      "id": "26512c09-5ebc-4bdb-9a2c-f6762686aff3",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//section/div[3]",
+      "targets": [
+        ["css=.navigation_component_filter__xnJPq", "css:finder"],
+        ["xpath=//div[@id='layout-body']/div/section/div[3]", "xpath:idRelative"],
+        ["xpath=//section/div[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "02ff9d2b-5cf5-414a-b4a8-b44c37061fea",
+      "comment": "",
+      "command": "click",
+      "target": "css=[class^=\"navigation_lives_form_button\"]:nth-child(3) > svg",
+      "targets": [
+        ["css=.navigation_lives_form_button__VONgv:nth-child(3) > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "d15c50bf-c6f4-4933-a00a-3b7708df022d",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=[class^=\"tags_all_item\"]",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "eeda2489-fe88-4a88-b04f-bb8615fa6183",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["d2faeba0-b203-4bac-b113-179f3c7d7c0a"]
+  }],
+  "urls": ["https://chzzk.naver.com/"],
+  "plugins": []
+}
