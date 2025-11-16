@@ -9,12 +9,16 @@ Selenium IDE로 작성한 테스트 시나리오를 Selenium Grid를 통해 병�
 - 📁 **일괄 실행**: `scenarios/` 폴더의 모든 `.side` 파일을 자동으로 실행
 - 📝 **결과 리포트**: JSON 형식으로 테스트 결과를 저장하고 분석 가능
 - 🔍 **실패 테스트 분석**: `parser.py`를 통해 실패한 테스트만 추출하여 빠른 디버깅
+- 🌐 **HTTP API**: FastAPI를 통한 RESTful API로 컨테이너 간 통신 및 원격 제어 가능
 
 ## 프로젝트 구조
 
 ```
 selenium-ide-runner/
-├── docker-compose.yml    # Selenium Grid 설정
+├── docker-compose.yml    # Selenium Grid 및 API 서비스 설정
+├── Dockerfile            # FastAPI 애플리케이션 Docker 이미지
+├── main.py               # FastAPI 애플리케이션
+├── requirements.txt      # Python 의존성
 ├── init.sh               # 초기 설정 스크립트
 ├── run.sh                # 테스트 실행 스크립트
 ├── parser.py             # 실패 테스트 분석 유틸리티
@@ -52,6 +56,7 @@ docker-compose up -d
 
 이 명령어는 다음을 시작합니다:
 - **Selenium Hub**: 포트 `4444`에서 실행
+- **FastAPI 서버**: 포트 `8000`에서 실행
 - **Chrome Node 1**: noVNC 포트 `7901`로 노출
 - **Chrome Node 2**: noVNC 포트 `7902`로 노출
 
@@ -65,7 +70,47 @@ http://localhost:4444
 
 ## 사용 방법
 
-### 테스트 실행
+### 방법 1: HTTP API 사용 (권장)
+
+FastAPI를 통해 HTTP 요청으로 테스트를 관리하고 실행할 수 있습니다.
+
+#### API 엔드포인트
+
+- **GET /sides**: 사이드 파일 목록 조회
+- **GET /sides/{side_id}**: 사이드 파일 다운로드
+- **POST /sides/{side_id}**: 사이드 파일 재현 (Selenium Grid로 실행)
+- **PATCH /sides/{side_id}**: 사이드 파일 업로드
+- **DELETE /sides/{side_id}**: 사이드 파일 삭제
+- **GET /health**: 헬스 체크
+
+#### API 사용 예시
+
+```bash
+# 사이드 파일 목록 조회
+curl http://localhost:8000/sides
+
+# 사이드 파일 업로드
+curl -X PATCH http://localhost:8000/sides/my-test \
+  -F "file=@/path/to/my-test.side"
+
+# 사이드 파일 실행
+curl -X POST http://localhost:8000/sides/my-test
+
+# 사이드 파일 다운로드
+curl http://localhost:8000/sides/my-test -o my-test.side
+
+# 사이드 파일 삭제
+curl -X DELETE http://localhost:8000/sides/my-test
+```
+
+#### API 문서
+
+서버 실행 후 다음 URL에서 자동 생성된 API 문서를 확인할 수 있습니다:
+
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+### 방법 2: 로컬 스크립트 사용
 
 `scenarios/` 폴더에 있는 모든 `.side` 파일을 병렬로 실행합니다:
 
@@ -98,6 +143,15 @@ python parser.py reports/results-YYYY-MM-DDTHH-MM-SS.json --plain
 
 ## 테스트 시나리오 추가
 
+### API를 통한 업로드 (권장)
+
+```bash
+curl -X PATCH http://localhost:8000/sides/{side_id} \
+  -F "file=@/path/to/your-test.side"
+```
+
+### 직접 파일 복사
+
 1. Selenium IDE에서 테스트를 작성하고 `.side` 파일로 내보내기
 2. `scenarios/` 폴더에 `.side` 파일 복사
 3. `./run.sh` 실행 시 자동으로 포함되어 실행됩니다
@@ -129,12 +183,22 @@ python parser.py reports/results-YYYY-MM-DDTHH-MM-SS.json --plain
 
 ### 테스트가 실행되지 않는 경우
 
-1. `selenium-side-runner`가 설치되어 있는지 확인:
+1. API 서버가 정상적으로 실행 중인지 확인:
+   ```bash
+   curl http://localhost:8000/health
+   ```
+
+2. API 서버 로그 확인:
+   ```bash
+   docker-compose logs api
+   ```
+
+3. `selenium-side-runner`가 설치되어 있는지 확인 (로컬 실행 시):
    ```bash
    which selenium-side-runner
    ```
 
-2. `scenarios/` 폴더에 `.side` 파일이 있는지 확인
+4. `scenarios/` 폴더에 `.side` 파일이 있는지 확인
 
 ### noVNC에 접속할 수 없는 경우
 

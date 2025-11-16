@@ -5,6 +5,20 @@ services:
     ports:
       - "4444:4444"  # Hub UI/포트
 
+  api:
+    build: .
+    container_name: selenium-api
+    ports:
+      - "8000:8000"  # FastAPI 포트
+    environment:
+      - SELENIUM_GRID_URL=http://selenium-hub:4444/wd/hub
+    depends_on:
+      - selenium-hub
+    volumes:
+      - ./scenarios:/app/scenarios
+      - ./reports:/app/reports
+    restart: unless-stopped
+
   chrome-node-1:
     image: selenium/node-chrome:latest
     platform: linux/amd64 # M1 CPU
